@@ -129,8 +129,16 @@ github.com/dl-nft-books/blob-svc v0.0.4-0.20230412083832-9441aef1be89 h1:olE7a2X
 github.com/dl-nft-books/blob-svc v0.0.4-0.20230412083832-9441aef1be89/go.mod h1:tuG5Ti1c4LnFxKyaigIsKwe0y6Falxfb//+rz2+IuuM=
 github.com/dl-nft-books/book-svc v0.0.0-20230411130424-8a2d7515116f h1:CziJ/Pwfte+3HAM3qKknN3VHuwgXqLE5oEXWvNtHFY8=
 github.com/dl-nft-books/book-svc v0.0.0-20230411130424-8a2d7515116f/go.mod h1:E6+den3RHZeiwEJOQ98XJIVWPbHbxk0XjPsEYQvxXB4=
+github.com/dl-nft-books/book-svc v0.0.0-20230424080956-52e97fb9503d h1:Wa+XoXUP6oKrpwPbQjRAgErMzCGXuGzVDV8F1PM6xYY=
+github.com/dl-nft-books/book-svc v0.0.0-20230424080956-52e97fb9503d/go.mod h1:E6+den3RHZeiwEJOQ98XJIVWPbHbxk0XjPsEYQvxXB4=
 github.com/dl-nft-books/core-svc v0.0.0-20230413110851-a2c4cb886bf6 h1:onQZ6OBA5SjuRSrwR01JBGIJrX/+09UX3HdA4k8OzyU=
 github.com/dl-nft-books/core-svc v0.0.0-20230413110851-a2c4cb886bf6/go.mod h1:L79af29l1UgETCfWnKt6eP73rjnxo3EtLELRDR9gbHM=
+github.com/dl-nft-books/core-svc v0.0.0-20230907160247-abcbd82f8c16 h1:yiV2ML5KsfV2roIcDgYVL/ueBSyFSAIKWf1NsdF5IMo=
+github.com/dl-nft-books/core-svc v0.0.0-20230907160247-abcbd82f8c16/go.mod h1:9FdZ1oYyyRtBaNPdMV7Cs3YSTFv7Yf3lVF2uT/8N1is=
+github.com/dl-nft-books/core-svc v0.0.0-20230907165617-08eb72c490a7 h1:F02Ol2ZsuWPkybnF6awObYmlw9SKL6gW9vTwga7P8Oo=
+github.com/dl-nft-books/core-svc v0.0.0-20230907165617-08eb72c490a7/go.mod h1:9FdZ1oYyyRtBaNPdMV7Cs3YSTFv7Yf3lVF2uT/8N1is=
+github.com/dl-nft-books/core-svc v0.0.0-20230907205135-d6c74369ca8e h1:ONJc5C1ILlwiZMqc5F9uGS6hrSz8/BSisN0IAitsdMI=
+github.com/dl-nft-books/core-svc v0.0.0-20230907205135-d6c74369ca8e/go.mod h1:9FdZ1oYyyRtBaNPdMV7Cs3YSTFv7Yf3lVF2uT/8N1is=
 github.com/dl-nft-books/network-svc v0.0.0-20230329160452-99950496eafe h1:dcHuGXbKkGsqb9vainB5Tah9O7jlyBur3cylR0FZh1A=
 github.com/dl-nft-books/network-svc v0.0.0-20230329160452-99950496eafe/go.mod h1:s3Vq12eYQ3bRigx4Yvr76334YrHMBOMKFTRW0qjVmfo=
 github.com/dustin/go-humanize v1.0.0/go.mod h1:HtrtbFcZ19U5GC7JDqmcUSB87Iq5E25KnS6fMYU6eOk=

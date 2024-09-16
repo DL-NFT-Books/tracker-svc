@@ -4,6 +4,7 @@
 
 package resources
 
-type NftRequestRelationships struct {
-	Book *Relation `json:"book,omitempty"`
+type TransactionAttributes struct {
+	// Transaction hash
+	TxHash string `json:"tx_hash"`
 }

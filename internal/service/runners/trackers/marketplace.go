@@ -19,6 +19,9 @@ import (
 
 const (
 	tokenSuccessfullyPurchasedSuffix = "-marketplace-successfully-purchased"
+	tokenSuccessfullyExchangedSuffix = "-marketplace-successfully-exchanged"
+	nftRequestCreatedSuffix          = "-marketplace-nft-req-created"
+	nftRequestCanceledSuffix         = "-marketplace-nft-req-canceled"
 )
 
 type DeployedToken struct {
@@ -77,6 +80,99 @@ func (t *MarketPlaceTracker) TrackTokenSuccessfullyPurchasedEvents(ch chan<- eth
 				From(startBlock).
 				WithCtx(ctx).
 				WatchTokenSuccessfullyPurchasedEvents(ch)
+		},
+		t.cfg.Backoff.NormalPeriod,
+		t.cfg.Backoff.MinAbnormalPeriod,
+		t.cfg.Backoff.MaxAbnormalPeriod,
+	)
+}
+
+func (t *MarketPlaceTracker) TrackTokenSuccessfullyExchangedEvents(ch chan<- etherdata.TokenSuccessfullyExchangedEvent) {
+	listener := t.listener.WithAddress(t.marketplaceAddress)
+	running.WithBackOff(
+		t.ctx,
+		t.log,
+		t.cfg.Prefix+tokenSuccessfullyExchangedSuffix,
+		func(ctx context.Context) error {
+			startBlock := uint64(t.network.FirstBlock)
+			block, err := t.database.Blocks().FilterByContractAddress(t.marketplaceAddress.String()).FilterByChainId(t.network.ChainId).Get()
+			if err != nil {
+				return errors.Wrap(err, "failed to get block to begin with")
+			}
+			if block != nil {
+				startBlock = block.TokenExchangedBlock
+			}
+
+			t.log.WithFields(logan.F{
+				"marketplace_address": t.marketplaceAddress,
+				"network":             t.network.Name,
+			}).Info("start tracking mint events from block ", startBlock)
+			return listener.
+				From(startBlock).
+				WithCtx(ctx).
+				WatchTokenSuccessfullyExchangedEvents(ch)
+		},
+		t.cfg.Backoff.NormalPeriod,
+		t.cfg.Backoff.MinAbnormalPeriod,
+		t.cfg.Backoff.MaxAbnormalPeriod,
+	)
+}
+
+func (t *MarketPlaceTracker) TrackNftRequestCreatedEvents(ch chan<- etherdata.NFTRequestCreatedEvent) {
+	listener := t.listener.WithAddress(t.marketplaceAddress)
+	running.WithBackOff(
+		t.ctx,
+		t.log,
+		t.cfg.Prefix+nftRequestCreatedSuffix,
+		func(ctx context.Context) error {
+			startBlock := uint64(t.network.FirstBlock)
+			block, err := t.database.Blocks().FilterByContractAddress(t.marketplaceAddress.String()).FilterByChainId(t.network.ChainId).Get()
+			if err != nil {
+				return errors.Wrap(err, "failed to get block to begin with")
+			}
+			if block != nil {
+				startBlock = block.NftRequestCreatedBlock
+			}
+
+			t.log.WithFields(logan.F{
+				"marketplace_address": t.marketplaceAddress,
+				"network":             t.network.Name,
+			}).Info("start tracking mint events from block ", startBlock)
+			return listener.
+				From(startBlock).
+				WithCtx(ctx).
+				WatchNftRequestCreatedEvents(ch)
+		},
+		t.cfg.Backoff.NormalPeriod,
+		t.cfg.Backoff.MinAbnormalPeriod,
+		t.cfg.Backoff.MaxAbnormalPeriod,
+	)
+}
+
+func (t *MarketPlaceTracker) TrackNftRequestCanceledEvents(ch chan<- etherdata.NFTRequestCanceledEvent) {
+	listener := t.listener.WithAddress(t.marketplaceAddress)
+	running.WithBackOff(
+		t.ctx,
+		t.log,
+		t.cfg.Prefix+nftRequestCanceledSuffix,
+		func(ctx context.Context) error {
+			startBlock := uint64(t.network.FirstBlock)
+			block, err := t.database.Blocks().FilterByContractAddress(t.marketplaceAddress.String()).FilterByChainId(t.network.ChainId).Get()
+			if err != nil {
+				return errors.Wrap(err, "failed to get block to begin with")
+			}
+			if block != nil {
+				startBlock = block.NftRequestCanceledBlock
+			}
+
+			t.log.WithFields(logan.F{
+				"marketplace_address": t.marketplaceAddress,
+				"network":             t.network.Name,
+			}).Info("start tracking mint events from block ", startBlock)
+			return listener.
+				From(startBlock).
+				WithCtx(ctx).
+				WatchNftRequestCanceledEvents(ch)
 		},
 		t.cfg.Backoff.NormalPeriod,
 		t.cfg.Backoff.MinAbnormalPeriod,

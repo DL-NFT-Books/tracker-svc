@@ -4,9 +4,9 @@ import (
 	"context"
 	"net/http"
 
-	"gitlab.com/distributed_lab/logan/v3"
 	booker "github.com/dl-nft-books/book-svc/connector"
 	"github.com/dl-nft-books/tracker-svc/internal/data"
+	"gitlab.com/distributed_lab/logan/v3"
 )
 
 type ctxKey int

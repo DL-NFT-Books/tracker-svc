@@ -6,8 +6,7 @@ package resources
 
 type CreateNftRequest struct {
 	Key
-	Attributes    CreateNftRequestAttributes    `json:"attributes"`
-	Relationships CreateNftRequestRelationships `json:"relationships"`
+	Attributes CreateNftRequestAttributes `json:"attributes"`
 }
 type CreateNftRequestRequest struct {
 	Data     CreateNftRequest `json:"data"`

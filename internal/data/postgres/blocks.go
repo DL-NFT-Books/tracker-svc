@@ -13,10 +13,13 @@ import (
 const (
 	blocksTable = "blocks"
 
-	blocksIdColumn              = "id"
-	blocksChainIdColumn         = "chain_id"
-	blocksContractAddressColumn = "contract_address"
-	tokenPurchasedBlockColumn   = "token_purchased_block"
+	blocksIdColumn                = "id"
+	blocksChainIdColumn           = "chain_id"
+	blocksContractAddressColumn   = "contract_address"
+	tokenPurchasedBlockColumn     = "token_purchased_block"
+	tokenExchangedBlockColumn     = "token_exchanged_block"
+	nftRequestCreatedBlockColumn  = "nft_request_created_block"
+	nftRequestCanceledBlockColumn = "nft_request_canceled_block"
 )
 
 type blocksQ struct {
@@ -63,6 +66,27 @@ func (q *blocksQ) UpdateTokenPurchasedBlockColumn(newMintBlock uint64, chainId i
 	statement := squirrel.Update(blocksTable).
 		Set(tokenPurchasedBlockColumn, newMintBlock).
 		Where(squirrel.Eq{blocksChainIdColumn: chainId})
+	return q.db.Exec(statement)
+}
+
+func (q *blocksQ) UpdateTokenExchangedBlockColumn(newExchangedBlock uint64, id int64) error {
+	statement := squirrel.Update(blocksTable).
+		Set(tokenExchangedBlockColumn, newExchangedBlock).
+		Where(squirrel.Eq{blocksIdColumn: id})
+	return q.db.Exec(statement)
+}
+
+func (q *blocksQ) UpdateNFTRequestCreatedBlockColumn(newNftRequestCreatedBlock uint64, id int64) error {
+	statement := squirrel.Update(blocksTable).
+		Set(nftRequestCreatedBlockColumn, newNftRequestCreatedBlock).
+		Where(squirrel.Eq{blocksIdColumn: id})
+	return q.db.Exec(statement)
+}
+
+func (q *blocksQ) UpdateNFTRequestCanceledBlockColumn(newNftRequestCanceledBlock uint64, id int64) error {
+	statement := squirrel.Update(blocksTable).
+		Set(nftRequestCanceledBlockColumn, newNftRequestCanceledBlock).
+		Where(squirrel.Eq{blocksIdColumn: id})
 	return q.db.Exec(statement)
 }
 

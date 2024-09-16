@@ -18,5 +18,8 @@ type (
 		WithDelayBetweenIntervals(delay time.Duration) TokenListener
 
 		WatchTokenSuccessfullyPurchasedEvents(ch chan<- etherdata.TokenSuccessfullyPurchasedEvent) error
+		WatchTokenSuccessfullyExchangedEvents(ch chan<- etherdata.TokenSuccessfullyExchangedEvent) error
+		WatchNftRequestCreatedEvents(ch chan<- etherdata.NFTRequestCreatedEvent) error
+		WatchNftRequestCanceledEvents(ch chan<- etherdata.NFTRequestCanceledEvent) error
 	}
 )

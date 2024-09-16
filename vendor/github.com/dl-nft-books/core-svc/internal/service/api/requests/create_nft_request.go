@@ -36,16 +36,20 @@ func (r CreateNftRequestRequest) validate() error {
 			&r.Data.Attributes.NftId,
 			validation.Required,
 		),
-		"data/attributes/collection_address": validation.Validate(
-			&r.Data.Attributes.CollectionAddress,
+		"data/attributes/nft_address": validation.Validate(
+			&r.Data.Attributes.NftAddress,
 			validation.Required,
 		),
-		"data/attributes/payer_address": validation.Validate(
-			&r.Data.Attributes.PayerAddress,
+		"data/attributes/marketplace_request_id": validation.Validate(
+			&r.Data.Attributes.MarketplaceRequestId,
 			validation.Required,
 		),
-		"data/relationships": validation.Validate(
-			&r.Data.Relationships,
+		"data/attributes/requester": validation.Validate(
+			&r.Data.Attributes.Requester,
+			validation.Required,
+		),
+		"data/attributes/book_id": validation.Validate(
+			&r.Data.Attributes.BookId,
 			validation.Required,
 		),
 	}.Filter()

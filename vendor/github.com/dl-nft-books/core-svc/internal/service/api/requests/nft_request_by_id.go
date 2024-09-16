@@ -7,17 +7,11 @@ import (
 	"strconv"
 )
 
-type NftRequestByIdRequest struct {
-	Id int64
-}
-
-func NewNftRequestByIdRequest(r *http.Request) (*NftRequestByIdRequest, error) {
-	idAsString, err := strconv.Atoi(chi.URLParam(r, "id"))
+func NewNftRequestByIdRequest(r *http.Request) (int64, error) {
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to get id from the url path")
+		return 0, errors.Wrap(err, "failed to get id from the url path")
 	}
 
-	return &NftRequestByIdRequest{
-		Id: int64(idAsString),
-	}, nil
+	return int64(id), nil
 }

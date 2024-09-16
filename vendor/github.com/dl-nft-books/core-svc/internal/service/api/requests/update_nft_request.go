@@ -12,6 +12,7 @@ import (
 )
 
 type UpdateNftRequestRequest struct {
+	ID int64
 	resources.UpdateNftRequestRequest
 }
 
@@ -21,14 +22,15 @@ func NewUpdateNftRequestRequest(r *http.Request) (*UpdateNftRequestRequest, erro
 		return nil, errors.Wrap(err, "failed to unmarshal update task request")
 	}
 
-	request.Data.ID = chi.URLParam(r, "id")
-
-	if _, err := strconv.Atoi(request.Data.ID); err != nil {
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
 		return nil, errors.Wrap(err, "failed to get id from the url path")
 	}
+	request.ID = int64(id)
 
 	return &request, request.validate()
 }
+
 func (r UpdateNftRequestRequest) validate() error {
 	return validation.Errors{
 		"data/attributes/status": validation.Validate(

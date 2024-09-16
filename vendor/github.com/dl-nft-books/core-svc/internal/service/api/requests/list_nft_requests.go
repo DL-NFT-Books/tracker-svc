@@ -11,20 +11,19 @@ import (
 
 type ListNftRequestsRequest struct {
 	pgdb.OffsetPageParams
-	Sorts             pgdb.Sorts                   `url:"sort" default:"id"`
-	PayerAddress      []string                     `filter:"payer_address"`
-	CollectionAddress []string                     `filter:"collection_address"`
-	NftId             []int64                      `filter:"nft_id"`
-	ChainId           []int64                      `filter:"chain_id"`
-	BookId            []int64                      `filter:"book_id"`
-	Status            []resources.NftRequestStatus `filter:"status"`
+	Sorts      pgdb.Sorts                   `url:"sort" default:"id"`
+	Requester  []string                     `filter:"requester"`
+	NftAddress []string                     `filter:"nft_address"`
+	ChainId    []int64                      `filter:"chain_id"`
+	BookId     []int64                      `filter:"book_id"`
+	Status     []resources.NftRequestStatus `filter:"status"`
 }
 
 func NewListNftRequestsRequest(r *http.Request) (*ListNftRequestsRequest, error) {
 	var request ListNftRequestsRequest
 
 	if err := urlval.Decode(r.URL.Query(), &request); err != nil {
-		return nil, errors.Wrap(err, "failed to unmarshal list promocodes request")
+		return nil, errors.Wrap(err, "failed to decode listNftRequests request")
 	}
 
 	return &request, nil

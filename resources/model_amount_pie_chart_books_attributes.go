@@ -5,7 +5,7 @@
 package resources
 
 type AmountPieChartBooksAttributes struct {
-	Amount  int64 `json:"amount"`
-	BookId  int64 `json:"book_id"`
-	ChainId int64 `json:"chain_id"`
+	Amount int64  `json:"amount"`
+	BookId int64  `json:"book_id"`
+	Name   string `json:"name"`
 }

@@ -38,19 +38,40 @@ func (c *TokenCombiner) ProduceAndConsumeTokenSuccessfullyPurchasedEvent() {
 	}()
 }
 
-//
-//func (c *TokenCombiner) ProduceAndConsumeMintByNftEvents() {
-//	// Running tracker (producer) and consumer with a combinersChannel joining them
-//	c.logger.Infof("Initializing mint by NFT event consumer and producer for %s", c.marketplaceAddress)
-//	go func() {
-//		ch := make(chan etherdata.TokenSuccessfullyPurchasedEvent)
-//		go c.tracker.TrackTokenSuccessfullyPurchasedEvents(ch)
-//		go c.consumer.ConsumeMintByNftEvents(ch)
-//	}()
-//}
+func (c *TokenCombiner) ProduceAndConsumeTokenSuccessfullyExchangedEvent() {
+	// Running tracker (producer) and consumer with a combinersChannel joining them
+	c.logger.Infof("Initializing token exchanged event consumer and producer for %s", c.marketplaceAddress)
+	go func() {
+		ch := make(chan etherdata.TokenSuccessfullyExchangedEvent)
+		go c.tracker.TrackTokenSuccessfullyExchangedEvents(ch)
+		go c.consumer.ConsumeTokenSuccessfullyExchangedEvent(ch)
+	}()
+}
+
+func (c *TokenCombiner) ProduceAndConsumeNftRequestCreatedEvent() {
+	// Running tracker (producer) and consumer with a combinersChannel joining them
+	c.logger.Infof("Initializing mint event consumer and producer for %s", c.marketplaceAddress)
+	go func() {
+		ch := make(chan etherdata.NFTRequestCreatedEvent)
+		go c.tracker.TrackNftRequestCreatedEvents(ch)
+		go c.consumer.ConsumeNFTRequestCreatedEvent(ch)
+	}()
+}
+
+func (c *TokenCombiner) ProduceAndConsumeNftRequestCanceledEvent() {
+	// Running tracker (producer) and consumer with a combinersChannel joining them
+	c.logger.Infof("Initializing mint event consumer and producer for %s", c.marketplaceAddress)
+	go func() {
+		ch := make(chan etherdata.NFTRequestCanceledEvent)
+		go c.tracker.TrackNftRequestCanceledEvents(ch)
+		go c.consumer.ConsumeNFTRequestCanceledEvent(ch)
+	}()
+}
 
 func (c *TokenCombiner) ProduceAndConsumeAllEvents() {
 	c.logger.Infof("Initializing all possible consumers and producers for %s", c.marketplaceAddress)
 	c.ProduceAndConsumeTokenSuccessfullyPurchasedEvent()
-	//c.ProduceAndConsumeMintByNftEvents()
+	c.ProduceAndConsumeTokenSuccessfullyExchangedEvent()
+	c.ProduceAndConsumeNftRequestCreatedEvent()
+	c.ProduceAndConsumeNftRequestCanceledEvent()
 }

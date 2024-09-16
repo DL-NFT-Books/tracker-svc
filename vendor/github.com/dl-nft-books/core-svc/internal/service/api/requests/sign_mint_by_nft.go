@@ -9,7 +9,6 @@ import (
 
 type SignMintByNftRequest struct {
 	TaskID     int64  `url:"task_id"`
-	Platform   string `url:"platform"`
 	NftAddress string `url:"token_address"`
 }
 
@@ -30,7 +29,6 @@ func (r SignMintByNftRequest) validate() error {
 			r.TaskID,
 			validation.Required,
 			validation.Min(1)),
-		"platform=": validation.Validate(r.Platform, validation.Required),
 	}.Filter()
 
 }

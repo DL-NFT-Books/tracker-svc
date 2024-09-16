@@ -16,8 +16,10 @@ import (
 )
 
 const (
-	mintConsumerSuffix      = "-marketplace-mint"
-	mintByNftConsumerSuffix = "-marketplace-mint-by-nft"
+	mintConsumerSuffix               = "-marketplace-mint"
+	nftRequestCreatedConsumerSuffix  = "-marketplace-nft-req-created"
+	nftRequestCanceledConsumerSuffix = "-marketplace-nft-req-canceled"
+	nftExchangedConsumerSuffix       = "-marketplace-nft-exchanged"
 )
 
 type MarketPlaceConsumer struct {

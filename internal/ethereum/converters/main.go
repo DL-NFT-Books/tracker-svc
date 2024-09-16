@@ -62,6 +62,85 @@ func (c *EventConverter) TokenSuccessfullyPurchased(raw marketplace.MarketplaceT
 	return event, nil
 }
 
+func (c *EventConverter) NFTRequestCreated(raw marketplace.MarketplaceNFTRequestCreated) (*etherdata.NFTRequestCreatedEvent, error) {
+	receipt, err := c.client.TransactionReceipt(c.ctx, raw.Raw.TxHash)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get tx receipt", logan.F{
+			"tx_hash": raw.Raw.TxHash.String(),
+		})
+	}
+
+	requestTimestamp, err := c.getBlockTimestamp(raw.Raw.BlockNumber)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get block timestamp")
+	}
+
+	event := &etherdata.NFTRequestCreatedEvent{
+		RequestId:     raw.RequestId,
+		Requester:     raw.Requester,
+		TokenContract: raw.TokenContract,
+		NftContract:   raw.NftContract,
+		NftId:         raw.NftId,
+		Status:        receipt.Status,
+		BlockNumber:   raw.Raw.BlockNumber,
+		Timestamp:     *requestTimestamp,
+	}
+
+	return event, nil
+}
+
+func (c *EventConverter) NFTRequestCanceled(raw marketplace.MarketplaceNFTRequestCanceled) (*etherdata.NFTRequestCanceledEvent, error) {
+	receipt, err := c.client.TransactionReceipt(c.ctx, raw.Raw.TxHash)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get tx receipt", logan.F{
+			"tx_hash": raw.Raw.TxHash.String(),
+		})
+	}
+
+	purchaseTimestamp, err := c.getBlockTimestamp(raw.Raw.BlockNumber)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get block timestamp")
+	}
+
+	event := &etherdata.NFTRequestCanceledEvent{
+		RequestId:   raw.RequestId,
+		Status:      receipt.Status,
+		BlockNumber: raw.Raw.BlockNumber,
+		Timestamp:   *purchaseTimestamp,
+	}
+
+	return event, nil
+}
+
+func (c *EventConverter) TokenSuccessfullyExchanged(raw marketplace.MarketplaceTokenSuccessfullyExchanged) (*etherdata.TokenSuccessfullyExchangedEvent, error) {
+	receipt, err := c.client.TransactionReceipt(c.ctx, raw.Raw.TxHash)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get tx receipt", logan.F{
+			"tx_hash": raw.Raw.TxHash.String(),
+		})
+	}
+
+	purchaseTimestamp, err := c.getBlockTimestamp(raw.Raw.BlockNumber)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get block timestamp")
+	}
+
+	event := &etherdata.TokenSuccessfullyExchangedEvent{
+		TokenContract: raw.NftRequestInfo.TokenContract,
+		Recipient:     raw.AcceptRequestParams.Recipient,
+		RequestId:     raw.AcceptRequestParams.RequestId,
+		TokenId:       raw.AcceptRequestParams.TokenData.TokenId,
+		NftAddress:    raw.NftRequestInfo.NftContract,
+		NftId:         raw.NftRequestInfo.NftId,
+		Uri:           raw.AcceptRequestParams.TokenData.TokenURI,
+		Status:        receipt.Status,
+		BlockNumber:   raw.Raw.BlockNumber,
+		Timestamp:     *purchaseTimestamp,
+	}
+
+	return event, nil
+}
+
 // getBlockTimestamp is a function that returns a timestamp
 // when a block with specified blockNumber was initialized
 func (c *EventConverter) getBlockTimestamp(blockNumber uint64) (*time.Time, error) {
